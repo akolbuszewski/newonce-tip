@@ -30,3 +30,64 @@ https://i.ibb.co/fDgh4Dv/kapix.png
 
 //font
 https://fonts.google.com/specimen/VT323#standard-styles
+
+//5PLN ICON
+https://ibb.co/P4gNfP3
+https://i.ibb.co/ZKxVkFt/kapi5-1.png
+
+//5PLN BUTTON RED
+https://ibb.co/6ZMjzHb
+https://i.ibb.co/dcT8FP6/kapi5c.png
+
+//5 PLN BUTTON BLUE
+https://ibb.co/BLBFmSz
+https://i.ibb.co/K6WSY30/kapi5N.png
+
+//10PLN ICON
+https://ibb.co/fFgYZgF
+https://i.ibb.co/qjSMhSj/kapi10.png
+
+//10 PLN ICON RED
+https://ibb.co/GJQmpBf
+https://i.ibb.co/wLhtg3Z/kapi10c.png
+
+//10 PLN ICON BLUE
+https://ibb.co/mGvBzXP
+https://i.ibb.co/f28S0nT/kapi10n.png
+
+//50 PLN ICON
+https://ibb.co/yVFp9B0
+https://i.ibb.co/DLfYJg4/kapi50.png
+
+//50 PLN BUTTON RED
+https://ibb.co/V3N0dXm
+https://i.ibb.co/yVRmDLS/kapi50c.png
+
+//50 PLN BUTTON BLUE
+https://ibb.co/Pcny5CV
+https://i.ibb.co/8rpwj8Q/kapi50n.png
+
+//BLIK LOGO
+https://ibb.co/WWBxj1K
+https://i.ibb.co/8DPKtV8/kapiblik.png
+
+//STEP3 FRAME
+https://ibb.co/s5LHFbH
+https://i.ibb.co/cbzLNkL/kapidziekujemy.png
+
+//STEP2 FRAME
+https://ibb.co/f9Vzw0w
+https://i.ibb.co/YX4Fsjs/kapikod.png
+
+//STEP1 FRAME
+https://ibb.co/wSxyxfz
+https://i.ibb.co/ZBkdk0M/kapikwota.png
+
+//STEP3 border for blik icon
+https://ibb.co/WcBfW6T
+https://i.ibb.co/Ytfh73r/kapiramka-blik.png
+
+//DONTAE with check
+https://ibb.co/hdccn5C
+https://i.ibb.co/NNrrkh7/kapitick.png
+
