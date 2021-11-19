@@ -1,0 +1,1864 @@
+{
+	"info": {
+		"_postman_id": "30b52e29-fa19-4dee-b1fa-fde608da47d0",
+		"name": "BLIK OneClick for Merchant",
+		"description": "env vars:\nurl: https://merch-prod.snd.payu.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OAuth authorize",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "adc88ddc-d246-4570-8d70-82da11a24f81",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Grant type is trusted merchant\"] = jsonData.grant_type === \"trusted_merchant\";",
+							"",
+							"postman.setGlobalVariable(\"oauth_token\", jsonData.access_token);",
+							"postman.setGlobalVariable(\"pos\", pm.variables.get(\"clientId\"));",
+							"postman.setGlobalVariable(\"amount\", \"12345\");",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5d9579b1-b00f-4af5-bea7-6e4f668e3e26",
+						"type": "text/javascript",
+						"exec": [
+							"postman.clearGlobalVariables();",
+							"var uuid = require('uuid');",
+							"var generatedUUID = uuid.v4();",
+							"var currentDate = new Date();",
+							"",
+							"var blik_customer_email = postman.getGlobalVariable(\"blik_customer_email\");",
+							"if (blik_customer_email !== null) {",
+							"    postman.setGlobalVariable(\"blik_customer_email\", \"testaccount1+\"+generatedUUID+\"@devil.prod.payudc.net\");",
+							"    postman.setGlobalVariable(\"blik_alias_create_date\", currentDate.addDays(-5).getTime());",
+							"    postman.setGlobalVariable(\"blik_alias_label\", \"te...\"+generatedUUID.substr(-2)+\"@de...et\");",
+							"}",
+							"",
+							"var blik_ext_customer_id = postman.getGlobalVariable(\"blik_ext_customer_id\");",
+							"if (blik_ext_customer_id !== null) {",
+							"    postman.setGlobalVariable(\"blik_ext_customer_id\", \"blik-user-\"+generatedUUID);",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{clientId}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "trusted_merchant",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "{{blik_customer_email}}",
+							"type": "text"
+						},
+						{
+							"key": "ext_customer_id",
+							"value": "{{blik_ext_customer_id}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}{{port}}/pl/standard/oauth/authorize",
+					"host": [
+						"{{url}}{{port}}"
+					],
+					"path": [
+						"pl",
+						"standard",
+						"oauth",
+						"authorize"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "OAuth authorize",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{clientId}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{clientSecret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "trusted_merchant",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{blik_customer_email}}",
+									"type": "text"
+								},
+								{
+									"key": "ext_customer_id",
+									"value": "{{blik_ext_customer_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/pl/standard/oauth/authorize",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pl",
+								"standard",
+								"oauth",
+								"authorize"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-store",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Correlation-Id",
+							"value": "0A4DC804-8E69_AC11001C-0050_5BC8664E_220F84-0014",
+							"name": "Correlation-Id",
+							"description": "Custom header"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 18 Oct 2018 10:54:06 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Server",
+							"value": "Apache",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff",
+							"name": "X-Content-Type-Options",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN",
+							"name": "X-Frame-Options",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block",
+							"name": "X-XSS-Protection",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Fri Oct 18 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "2202435d-f33c-454e-bc42-16c503c0710c",
+							"key": "cookieFingerprint"
+						},
+						{
+							"expires": "Sun Oct 13 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "mobile_agent-false#",
+							"key": "payu_persistent"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": false,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "1",
+							"key": "B3"
+						}
+					],
+					"body": "{\"access_token\":\"4ff0a5bf-72fb-4b97-9167-e8f154dc68c9\",\"token_type\":\"bearer\",\"refresh_token\":\"68ffebdd-21b3-447f-b2e2-011d35ea95fa\",\"expires_in\":43199,\"grant_type\":\"trusted_merchant\"}"
+				}
+			]
+		},
+		{
+			"name": "PayMethods Retrieve",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "915c45ef-c535-46eb-94a9-c5dc58f9317e",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var blikTokens = jsonData.blikTokens;",
+							"",
+							"if (blikTokens != null) {",
+							"   postman.setGlobalVariable(\"blik_alias_value\", blikTokens[0].value); ",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{oauth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}{{port}}/api/v2_1/paymethods",
+					"host": [
+						"{{url}}{{port}}"
+					],
+					"path": [
+						"api",
+						"v2_1",
+						"paymethods"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "PayMethods Retrieve",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_token}}",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/v2_1/paymethods",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v2_1",
+								"paymethods"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Correlation-Id",
+							"value": "0A4DC804-E218_AC11001C-0050_5BC866C0_221626-0014",
+							"name": "Correlation-Id",
+							"description": "Custom header"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 18 Oct 2018 10:56:14 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "X-Application-Context",
+							"value": "application:withConsole:8080",
+							"name": "X-Application-Context",
+							"description": "Custom header"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff",
+							"name": "X-Content-Type-Options",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN",
+							"name": "X-Frame-Options",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block",
+							"name": "X-XSS-Protection",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Fri Oct 18 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "2202435d-f33c-454e-bc42-16c503c0710c",
+							"key": "cookieFingerprint"
+						},
+						{
+							"expires": "Sun Oct 13 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "mobile_agent-false#",
+							"key": "payu_persistent"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": false,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "1",
+							"key": "B3"
+						}
+					],
+					"body": "{\"blikTokens\":[{\"value\":\"TOKB_Erk6GpSbbqqrEKTUzDkU1xPIjibWR2cJ\",\"type\":\"UID\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_blik.png\"}],\"payByLinks\":[{\"value\":\"blik\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_blik.png\",\"name\":\"BLIK\",\"status\":\"ENABLED\",\"minAmount\":100,\"maxAmount\":99999999},{\"value\":\"p\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_p.png\",\"name\":\"Płacę z iPKO\",\"status\":\"ENABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"m\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_m.png\",\"name\":\"mTransfer\",\"status\":\"ENABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"g\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_g_off.png\",\"name\":\"Płać z ING\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"w\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_w_off.png\",\"name\":\"Przelew24\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"o\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_o.png\",\"name\":\"Płacę z Bankiem Pekao S.A.\",\"status\":\"ENABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"wm\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_wm_off.png\",\"name\":\"Płacę z Millennium\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"ab\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_ab_off.png\",\"name\":\"Płacę z Alior Bankiem\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"h\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_h_off.png\",\"name\":\"Płacę poprzez Przelew z BPH\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"i\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_i_off.png\",\"name\":\"Płacę z Inteligo\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"l\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_l_off.png\",\"name\":\"Crédit Agricole e-przelew\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"as\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_as_off.png\",\"name\":\"Płacę z T-Mobile Usługi Bankowe\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"u\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_u_off.png\",\"name\":\"Płacę z Eurobankiem\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"wd\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_wd_off.png\",\"name\":\"Przelew z Deutsche Bank\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"wc\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_wc_off.png\",\"name\":\"Płacę z Citi Handlowy\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"ib\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_ib_off.png\",\"name\":\"Przelew z Idea Bank\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"bo\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_bo_off.png\",\"name\":\"Płać z BOŚ\",\"status\":\"DISABLED\",\"minAmount\":100,\"maxAmount\":99999999},{\"value\":\"ps\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_ps_off.png\",\"name\":\"Przelew z PBS\",\"status\":\"DISABLED\",\"minAmount\":50,\"maxAmount\":99999999},{\"value\":\"wr\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_wr_off.png\",\"name\":\"Przelew z Raiffeisen POLBANK\",\"status\":\"DISABLED\",\"minAmount\":100,\"maxAmount\":99999999},{\"value\":\"t\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_t.png\",\"name\":\"Płatność testowa\",\"status\":\"ENABLED\",\"minAmount\":50,\"maxAmount\":100000},{\"value\":\"c\",\"brandImageUrl\":\"https://static.payu.com/images/mobile/logos/pbl_c.png\",\"name\":\"Płatność online kartą płatniczą\",\"status\":\"ENABLED\",\"minAmount\":50,\"maxAmount\":99999999}],\"status\":{\"statusCode\":\"SUCCESS\"}}"
+				}
+			]
+		},
+		{
+			"name": "BLIK OCR - code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a18d7aa8-6501-4749-b8bc-44e27179e9d0",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"last_order_id\", jsonData.orderId);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{oauth_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST_{{$guid}}\",\r\n  \"notifyUrl\": \"{{notifyUrl}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"PBL\",\r\n      \"value\": \"blik\",\r\n      \"authorizationCode\": \"777123\"\r\n    }\r\n  }\r\n \r\n}"
+				},
+				"url": {
+					"raw": "{{url}}{{port}}/api/v2_1/orders",
+					"host": [
+						"{{url}}{{port}}"
+					],
+					"path": [
+						"api",
+						"v2_1",
+						"orders"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "BLIK OCR - code",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_token}}",
+								"disabled": false
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST_{{$guid}}\",\r\n  \"notifyUrl\": \"{{notifyUrl}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"PBL\",\r\n      \"value\": \"blik\",\r\n      \"authorizationCode\": \"777123\"\r\n    }\r\n  }\r\n \r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v2_1/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v2_1",
+								"orders"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Correlation-Id",
+							"value": "0A4DC804-2513_AC11001C-0050_5BC866A2_221471-0014",
+							"name": "Correlation-Id",
+							"description": "Custom header"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 18 Oct 2018 10:55:32 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Server",
+							"value": "Apache",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "X-Application-Context",
+							"value": "application:docker-logs:8089",
+							"name": "X-Application-Context",
+							"description": "Custom header"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff",
+							"name": "X-Content-Type-Options",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN",
+							"name": "X-Frame-Options",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block",
+							"name": "X-XSS-Protection",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Fri Oct 18 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "2202435d-f33c-454e-bc42-16c503c0710c",
+							"key": "cookieFingerprint"
+						},
+						{
+							"expires": "Sun Oct 13 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "mobile_agent-false#",
+							"key": "payu_persistent"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": false,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "1",
+							"key": "B3"
+						}
+					],
+					"body": "{\"orderId\":\"X22RNVVFZQ181018GUEST000P01\",\"status\":{\"statusCode\":\"SUCCESS\"}}"
+				}
+			]
+		},
+		{
+			"name": "BLIK OCR - token register by payu",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6981800-589b-4e31-9b6a-55f73f584a3e",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"last_order_id\", jsonData.orderId);"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "da91be6c-7e39-49a1-a5b6-b2306f2d255c",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{oauth_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST\",\r\n  \"extOrderId\": \"blik_alias_register_{{$guid}}\",\r\n  \"notifyUrl\": \"{{notifyUrl}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"buyer\": {\r\n    \"extCustomerId\": \"{{blik_ext_customer_id}}\",\r\n    \"email\": \"{{blik_customer_email}}\"\r\n  },\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"BLIK_TOKEN\",\r\n      \"authorizationCode\": \"777123\",\r\n      \"blikData\": {\r\n      \t\t\"register\":true\r\n      }\r\n    }\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}{{port}}/api/v2_1/orders",
+					"host": [
+						"{{url}}{{port}}"
+					],
+					"path": [
+						"api",
+						"v2_1",
+						"orders"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "BLIK OCR - token register by payu",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_token}}",
+								"disabled": false
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST\",\r\n  \"extOrderId\": \"blik_alias_register_{{$guid}}\",\r\n  \"notifyUrl\": \"{{notifyUrl}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"buyer\": {\r\n    \"extCustomerId\": \"{{blik_ext_customer_id}}\",\r\n    \"email\": \"{{blik_customer_email}}\"\r\n  },\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"BLIK_TOKEN\",\r\n      \"authorizationCode\": \"777123\",\r\n      \"blikData\": {\r\n      \t\t\"register\":true\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v2_1/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v2_1",
+								"orders"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Correlation-Id",
+							"value": "0A4DC804-9FAC_AC11001C-0050_5BC866B9_2215B4-0014",
+							"name": "Correlation-Id",
+							"description": "Custom header"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 18 Oct 2018 10:55:54 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Server",
+							"value": "Apache",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "X-Application-Context",
+							"value": "application:docker-logs:8089",
+							"name": "X-Application-Context",
+							"description": "Custom header"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff",
+							"name": "X-Content-Type-Options",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN",
+							"name": "X-Frame-Options",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block",
+							"name": "X-XSS-Protection",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Fri Oct 18 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "2202435d-f33c-454e-bc42-16c503c0710c",
+							"key": "cookieFingerprint"
+						},
+						{
+							"expires": "Sun Oct 13 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "mobile_agent-false#",
+							"key": "payu_persistent"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": false,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "1",
+							"key": "B3"
+						}
+					],
+					"body": "{\"orderId\":\"ZHTN9RLNBL181018GUEST000P01\",\"status\":{\"statusCode\":\"SUCCESS\"}}"
+				}
+			]
+		},
+		{
+			"name": "BLIK OCR - pay with token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2823649f-72fe-488f-bca3-8e1f196bb2db",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"last_order_id\", jsonData.orderId);",
+							"",
+							"if (responseCode.code === 400) {",
+							"    ",
+							"    var blikData = jsonData.blikData;",
+							"    if (blikData.alternatives !== null && blikData.alternatives.length > 0) {",
+							"        postman.setGlobalVariable(\"blik_alias_appKey\", blikData.alternatives[0].appKey);",
+							"    }",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{oauth_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST_{{$guid}}\",\r\n  \"extOrderId\": \"blik_alias_pay_{{$guid}}\",\r\n  \"notifyUrl\": \"{{notifyUrl}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"buyer\": {\r\n    \"extCustomerId\": \"{{blik_ext_customer_id}}\",\r\n    \"email\": \"{{blik_customer_email}}\"\r\n  },\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"BLIK_TOKEN\",\r\n      \"value\": \"{{blik_alias_value}}\"\r\n    }\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}{{port}}/api/v2_1/orders",
+					"host": [
+						"{{url}}{{port}}"
+					],
+					"path": [
+						"api",
+						"v2_1",
+						"orders"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "BLIK OCR - pay with token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_token}}",
+								"disabled": false
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST_{{$guid}}\",\r\n  \"extOrderId\": \"blik_alias_pay_{{$guid}}\",\r\n  \"notifyUrl\": \"{{notifyUrl}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"buyer\": {\r\n    \"extCustomerId\": \"{{blik_ext_customer_id}}\",\r\n    \"email\": \"{{blik_customer_email}}\"\r\n  },\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"BLIK_TOKEN\",\r\n      \"value\": \"{{blik_alias_value}}\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v2_1/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v2_1",
+								"orders"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Correlation-Id",
+							"value": "0A4DC804-CFB4_AC11001C-0050_5BC866D4_22165E-0014",
+							"name": "Correlation-Id",
+							"description": "Custom header"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 18 Oct 2018 10:56:23 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Server",
+							"value": "Apache",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "X-Application-Context",
+							"value": "application:docker-logs:8089",
+							"name": "X-Application-Context",
+							"description": "Custom header"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff",
+							"name": "X-Content-Type-Options",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN",
+							"name": "X-Frame-Options",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block",
+							"name": "X-XSS-Protection",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Fri Oct 18 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "2202435d-f33c-454e-bc42-16c503c0710c",
+							"key": "cookieFingerprint"
+						},
+						{
+							"expires": "Sun Oct 13 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "mobile_agent-false#",
+							"key": "payu_persistent"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": false,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "1",
+							"key": "B3"
+						}
+					],
+					"body": "{\"orderId\":\"3J53WK6QZ4181018GUEST000P01\",\"status\":{\"statusCode\":\"SUCCESS\"}}"
+				},
+				{
+					"name": "BLIK OCR - pay with token - nonunique case ",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_token}}",
+								"disabled": false
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST_{{$guid}}\",\r\n  \"extOrderId\": \"blik_alias_pay_{{$guid}}\",\r\n  \"notifyUrl\": \"{{notifyUrl}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"buyer\": {\r\n    \"extCustomerId\": \"{{blik_ext_customer_id}}\",\r\n    \"email\": \"{{blik_customer_email}}\"\r\n  },\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"BLIK_TOKEN\",\r\n      \"value\": \"{{blik_alias_value}}\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}{{port}}/api/v2_1/orders",
+							"host": [
+								"{{url}}{{port}}"
+							],
+							"path": [
+								"api",
+								"v2_1",
+								"orders"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Correlation-Id",
+							"value": "AC139936-948F_AC11001C-0050_5BDC7B77_518BA-0016",
+							"name": "Correlation-Id",
+							"description": "Custom header"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 Nov 2018 16:33:27 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Server",
+							"value": "Apache",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "X-Application-Context",
+							"value": "application:docker-logs:8089",
+							"name": "X-Application-Context",
+							"description": "Custom header"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff",
+							"name": "X-Content-Type-Options",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN",
+							"name": "X-Frame-Options",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block",
+							"name": "X-XSS-Protection",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Thu Oct 10 2019 14:01:33 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "e89dd452-1df3-4318-a31b-dcd1dc3fd05f",
+							"key": "cookieFingerprint"
+						},
+						{
+							"expires": "Sat Oct 05 2019 14:01:33 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "mobile_agent-false#",
+							"key": "payu_persistent"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": false,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "1",
+							"key": "B3"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": true,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "7078697944DA4E4A3AD56AEA9236BE27",
+							"key": "JSESSIONID"
+						}
+					],
+					"body": "{\"blikData\":{\"alternatives\":[{\"appKey\":\"789012\",\"appLabel\":\"te...74@de...et\"},{\"appKey\":\"123456\",\"appLabel\":\"te...74@de...et\"},{\"appKey\":\"987654\",\"appLabel\":\"te...74@de...et\"}]},\"status\":{\"statusCode\":\"ERROR_TOKEN\",\"codeLiteral\":\"AUTH_TOKEN_NONUNIQUE\",\"statusDesc\":\"Podany alias nie jest jednoznaczny.\"}}"
+				}
+			]
+		},
+		{
+			"name": "Order Retrieve",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"postman.setGlobalVariable(\"last_payment_id\", jsonData.properties[0].value);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{oauth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}{{port}}/api/v2_1/orders/{{last_order_id}}",
+					"host": [
+						"{{url}}{{port}}"
+					],
+					"path": [
+						"api",
+						"v2_1",
+						"orders",
+						"{{last_order_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Order Retrieve",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_token}}",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/v2_1/orders/{{last_order_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v2_1",
+								"orders",
+								"{{last_order_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Correlation-Id",
+							"value": "0A4DC804-EC8C_AC11001C-0050_5BC866DB_221674-0014",
+							"name": "Correlation-Id",
+							"description": "Custom header"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 18 Oct 2018 10:56:31 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Server",
+							"value": "Apache",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff",
+							"name": "X-Content-Type-Options",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN",
+							"name": "X-Frame-Options",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block",
+							"name": "X-XSS-Protection",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Fri Oct 18 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "2202435d-f33c-454e-bc42-16c503c0710c",
+							"key": "cookieFingerprint"
+						},
+						{
+							"expires": "Sun Oct 13 2019 09:45:08 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "mobile_agent-false#",
+							"key": "payu_persistent"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": false,
+							"domain": "merch-prod.snd.payu.com",
+							"path": "/",
+							"secure": false,
+							"value": "1",
+							"key": "B3"
+						}
+					],
+					"body": "{\"orders\":[{\"orderId\":\"3J53WK6QZ4181018GUEST000P01\",\"extOrderId\":\"blik_alias_pay_872b6888-347c-4449-8f82-f1d1cacfde6d\",\"orderCreateDate\":\"2018-10-18T12:56:23.458+02:00\",\"notifyUrl\":\"http://test.merch.notifyUrl\",\"customerIp\":\"193.17.41.0\",\"merchantPosId\":\"202337\",\"description\":\"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST_50573222-a9a3-4979-874e-961515575a80\",\"currencyCode\":\"PLN\",\"totalAmount\":\"12345\",\"status\":\"PENDING\",\"products\":[{\"name\":\"Wireless Mouse for Laptop\",\"unitPrice\":\"12345\",\"quantity\":\"1\"}]}],\"status\":{\"statusCode\":\"SUCCESS\",\"statusDesc\":\"Request processing successful\"},\"properties\":[{\"name\":\"PAYMENT_ID\",\"value\":\"73688178\"}]}"
+				}
+			]
+		},
+		{
+			"name": "BLIK OCR - pay with nonunique token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a18d7aa8-6501-4749-b8bc-44e27179e9d0",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"last_order_id\", jsonData.orderId);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{oauth_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST_{{$guid}}\",\r\n  \"extOrderId\": \"blik_alias_pay_{{$guid}}\",\r\n  \"notifyUrl\": \"{{notifyUrl}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"buyer\": {\r\n    \"extCustomerId\": \"{{blik_ext_customer_id}}\",\r\n    \"email\": \"{{blik_customer_email}}\"\r\n  },\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"BLIK_TOKEN\",\r\n      \"value\": \"{{blik_alias_value}}\",\r\n      \"blikData\": {\r\n      \t\"appKey\":\"{{blik_alias_appKey}}\"\r\n      }\r\n    }\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}{{port}}/api/v2_1/orders",
+					"host": [
+						"{{url}}{{port}}"
+					],
+					"path": [
+						"api",
+						"v2_1",
+						"orders"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "BLIK OCR - pay with nonunique token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_token}}",
+								"disabled": false
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST_{{$guid}}\",\r\n  \"extOrderId\": \"blik_alias_pay_{{$guid}}\",\r\n  \"notifyUrl\": \"{{notifyUrl}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"buyer\": {\r\n    \"extCustomerId\": \"{{blik_ext_customer_id}}\",\r\n    \"email\": \"{{blik_customer_email}}\"\r\n  },\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"BLIK_TOKEN\",\r\n      \"value\": \"{{blik_alias_value}}\",\r\n      \"blikData\": {\r\n      \t\"appKey\":\"{{blik_alias_appKey}}\"\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}{{port}}/api/v2_1/orders",
+							"host": [
+								"{{url}}{{port}}"
+							],
+							"path": [
+								"api",
+								"v2_1",
+								"orders"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Correlation-Id",
+							"value": "AC139936-948F_AC11001C-0050_5BDC7C57_518CA-0016",
+							"name": "Correlation-Id",
+							"description": "Custom header"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 Nov 2018 16:34:30 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Server",
+							"value": "Apache",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "X-Application-Context",
+							"value": "application:docker-logs:8089",
+							"name": "X-Application-Context",
+							"description": "Custom header"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff",
+							"name": "X-Content-Type-Options",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN",
+							"name": "X-Frame-Options",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block",
+							"name": "X-XSS-Protection",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Thu Oct 10 2019 14:01:33 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "e89dd452-1df3-4318-a31b-dcd1dc3fd05f",
+							"key": "cookieFingerprint"
+						},
+						{
+							"expires": "Sat Oct 05 2019 14:01:33 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "mobile_agent-false#",
+							"key": "payu_persistent"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": false,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "1",
+							"key": "B3"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": true,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "7078697944DA4E4A3AD56AEA9236BE27",
+							"key": "JSESSIONID"
+						}
+					],
+					"body": "{\"orderId\":\"ZCDD2T6VB6181102GUEST000P01\",\"status\":{\"statusCode\":\"SUCCESS\"}}"
+				}
+			]
+		},
+		{
+			"name": "BLIK OCR - register nonunique token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6981800-589b-4e31-9b6a-55f73f584a3e",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"last_order_id\", jsonData.orderId);"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c6cfd681-6e8a-4c94-a1a2-d0e619e4e3be",
+						"type": "text/javascript",
+						"exec": [
+							"var uuid = require('uuid');",
+							"var generatedUUID = uuid.v4();",
+							"postman.setGlobalVariable(\"blik_alias_value\", \"SIMULATE_ALIAS_NON_UNIQUE-\" + generatedUUID);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{oauth_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST\",\r\n  \"extOrderId\": \"blik_alias_register_{{$guid}}\",\r\n  \"notifyUrl\": \"{{url}}:8150/onlines/online.php?version=pub2.1&onlineId=blik_code_{{$guid}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"buyer\": {\r\n    \"extCustomerId\": \"{{blik_ext_customer_id}}\",\r\n    \"email\": \"{{blik_customer_email}}\"\r\n  },\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"BLIK_TOKEN\",\r\n      \"value\": \"{{blik_alias_value}}\",\r\n      \"authorizationCode\": \"777123\",\r\n      \"blikData\": {\r\n      \t\t\"register\":true\r\n      }\r\n\r\n    }\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}{{port}}/api/v2_1/orders",
+					"host": [
+						"{{url}}{{port}}"
+					],
+					"path": [
+						"api",
+						"v2_1",
+						"orders"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "BLIK OCR - register nonunique alias",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_token}}",
+								"disabled": false
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currencyCode\": \"PLN\",\r\n  \"totalAmount\": {{amount}},\r\n  \"description\": \"TESTąćęłńóśóżźTEST!@#$%^&*()-=TEST\",\r\n  \"extOrderId\": \"blik_alias_register_{{$guid}}\",\r\n  \"notifyUrl\": \"{{url}}:8150/onlines/online.php?version=pub2.1&onlineId=blik_code_{{$guid}}\",\r\n  \"customerIp\": \"193.17.41.0\",\r\n  \"merchantPosId\": \"{{pos}}\",\r\n  \"buyer\": {\r\n    \"extCustomerId\": \"{{blik_ext_customer_id}}\",\r\n    \"email\": \"{{blik_customer_email}}\"\r\n  },\r\n  \"products\": [\r\n        {\r\n            \"name\": \"Wireless Mouse for Laptop\",\r\n            \"unitPrice\": \"{{amount}}\",\r\n            \"quantity\": \"1\"\r\n        }\r\n    ],\r\n   \"payMethods\": {\r\n    \"payMethod\": {\r\n      \"type\": \"BLIK_TOKEN\",\r\n      \"value\": \"{{blik_alias_value}}\",\r\n      \"authorizationCode\": \"777123\",\r\n      \"blikData\": {\r\n      \t\t\"register\":true\r\n      }\r\n\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}{{port}}/api/v2_1/orders",
+							"host": [
+								"{{url}}{{port}}"
+							],
+							"path": [
+								"api",
+								"v2_1",
+								"orders"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate",
+							"name": "Cache-Control",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Correlation-Id",
+							"value": "AC139936-948F_AC11001C-0050_5BDC7B62_518B6-0016",
+							"name": "Correlation-Id",
+							"description": "Custom header"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 Nov 2018 16:29:35 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Expires",
+							"value": "0",
+							"name": "Expires",
+							"description": "Gives the date/time after which the response is considered stale"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache",
+							"name": "Pragma",
+							"description": "Implementation-specific headers that may have various effects anywhere along the request-response chain."
+						},
+						{
+							"key": "Server",
+							"value": "Apache",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "X-Application-Context",
+							"value": "application:docker-logs:8089",
+							"name": "X-Application-Context",
+							"description": "Custom header"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff",
+							"name": "X-Content-Type-Options",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN",
+							"name": "X-Frame-Options",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block",
+							"name": "X-XSS-Protection",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Thu Oct 10 2019 14:01:33 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "e89dd452-1df3-4318-a31b-dcd1dc3fd05f",
+							"key": "cookieFingerprint"
+						},
+						{
+							"expires": "Sat Oct 05 2019 14:01:33 GMT+0200 (Central European Daylight Time)",
+							"httpOnly": true,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "mobile_agent-false#",
+							"key": "payu_persistent"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": false,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "1",
+							"key": "B3"
+						},
+						{
+							"expires": "Tue Jan 19 2038 04:14:07 GMT+0100 (Central European Standard Time)",
+							"httpOnly": true,
+							"domain": "manager1.env02.avo.pl4.payudc.net",
+							"path": "/",
+							"secure": false,
+							"value": "7078697944DA4E4A3AD56AEA9236BE27",
+							"key": "JSESSIONID"
+						}
+					],
+					"body": "{\"orderId\":\"KX7KST6SWG181102GUEST000P01\",\"status\":{\"statusCode\":\"SUCCESS\"}}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "eb890e30-8801-4bb1-86be-9c796b95c3f5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1157c133-d43c-4632-bc62-dbdd1f18e9b3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "e39383d7-bd79-41a7-b444-4d4f947ef917",
+			"key": "url",
+			"value": "https://merch-prod.snd.payu.com",
+			"type": "string"
+		},
+		{
+			"id": "a3f72508-d64f-47c2-b917-5492b2587783",
+			"key": "notifyUrl",
+			"value": "http://test.merch.notifyUrl",
+			"type": "string"
+		},
+		{
+			"id": "1ffe3699-3315-4249-91b0-56793137a2e0",
+			"key": "clientId",
+			"value": "202337",
+			"type": "string"
+		},
+		{
+			"id": "ba3f0462-fc40-4707-a838-e6f04dd91ef7",
+			"key": "clientSecret",
+			"value": "242cca54b1dd99cc0ba993b659bece0f",
+			"type": "string"
+		},
+		{
+			"id": "57a6ce1b-4016-4dbc-9d13-5476cf90079b",
+			"key": "port",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
