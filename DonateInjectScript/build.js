@@ -227,8 +227,6 @@ const donateContainer = (viewportWidth, desktopPlayerWidth,isDekstop) => {
 		donateContainer.appendChild(albumCoverHolder(getCurrnetPlayedAlbumCover()));
 		donateContainer.style.maxWidth = `${desktopPlayerWidth}px`; 
 		console.log(desktopPlayerWidth);
-	}else{
-		
 	}
 	donateContainer.appendChild(donateContainerBottomBox())	
 
@@ -262,19 +260,58 @@ const toggleDonateFrame = () => {
 	}
 }
 
-const donateFrameFlowControl = () => {
-	
-}
 
 const addCSS = s => document.head.appendChild(document.createElement("style")).innerHTML=s;
+
+const API_URL = 'https://newonce-tip-api.vercel.app/api';
+
+const getNowPlaying = async () => {
+    try {
+        const response = await fetch(`${API_URL}/now-playing`);
+        const data = await response.json()
+        return data;
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+const donate = async (artist, blikCode, amount) => {
+    try {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify({artist, blikCode, amount});
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        const response = await fetch(`${API_URL}/donate`, requestOptions);
+        const data = await response.json();
+        return data
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+let CURRENT_PLAY = {};
 
 const mainInject = () => {
 	const WINDOW_VW_WIDTH = window.innerWidth;
 	const DEKSTOP_PLAYER_WIDTH = 496;
 	const MAX_WIDTH_FOR_BOTTOM_PLAYER = 1023;
 	const IS_DESKTOP = (WINDOW_VW_WIDTH < MAX_WIDTH_FOR_BOTTOM_PLAYER) ? false : true;
-
-	//console.log(WINDOW_VW_WIDTH, DEKSTOP_PLAYER_WIDTH);
+	
+	
+	getNowPlaying().then((response) => {
+		console.log(response)
+		CURRENT_PLAY = response
+	});
+	
+	console.log(CURRENT_PLAY);
 
 	preventDefault();
 	fontUpload();
