@@ -6,8 +6,7 @@
     npm i -g now
     ```
 
-2. [Optional] Properly configure your custom domain according to [Aliasing a Deployment](https://zeit.co/docs/v2/domains-and-aliases/aliasing-a-deployment/). (Only if you need a custom domain.)
-3. Run `npm i` and then `npm run deploy`.
+2. Run `npm i` and then `npm run deploy`.
 
 See the following log for example:
 
