@@ -168,11 +168,15 @@ const donateFrameStep2 = () => {
 	step2ContentHolder.appendChild(step2ContentHolderInputHolder);
 
 	donateFrameStep2.append(step2ContentHolder)	
-
-	// donateFrameStep2.onclick = () => {
-	// 	document.querySelector('.donateFrameStep2').style.display = "none";
-	// 	document.querySelector('.donateFrameStep3').style.display = "block";
-	// }
+	
+	donateFrameStep2.onkeydown = () => {
+		let count = blikInput.value.length 
+			console.log(count)
+		// if()
+		// document.querySelector('.donateFrameStep2').style.display = "none";
+		// document.querySelector('.donateFrameStep3').style.display = "block";
+		
+	}
 	
 	return donateFrameStep2;
 }
