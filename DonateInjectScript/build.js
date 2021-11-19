@@ -103,6 +103,30 @@ const donateFrameStep1 = () => {
 
 	donateFrameStep1.style.cssText = 'background-image: url(https://i.ibb.co/ZBkdk0M/kapikwota.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
 	//donateFrameStep1.classList.add('noneActiveFrame');
+
+	let amountButtonsHolder = document.createElement('div');
+	amountButtonsHolder.style.cssText = "position: absolute;width: 150px;height: 40px;background-color: red;bottom: 40px;left: 30px;display: flex;justify-content: space-around;"
+
+	let button5PLN = document.createElement('button');
+	button5PLN.classList.add('button5PLN')
+	button5PLN.style.cssText = "background-image: url('https://i.ibb.co/K6WSY30/kapi5N.png')";
+	let button10PLN = document.createElement('button');
+	button10PLN.classList.add('button10PLN');
+	button10PLN.style.cssText = "background-image: url(https://i.ibb.co/f28S0nT/kapi10n.png);";
+	let button50PLN = document.createElement('button');
+	button50PLN.classList.add('button50PLN');
+	button50PLN.style.cssText = "background-image: url(https://i.ibb.co/8rpwj8Q/kapi50n.png);";
+
+	button5PLN.classList.add('amountButton')
+	button10PLN.classList.add('amountButton')
+	button50PLN.classList.add('amountButton')
+
+	amountButtonsHolder.appendChild(button5PLN);
+	amountButtonsHolder.appendChild(button10PLN);
+	amountButtonsHolder.appendChild(button50PLN);
+
+	donateFrameStep1.appendChild(amountButtonsHolder);
+
 	donateFrameStep1.onclick = () => {
 		document.querySelector('.donateFrameStep1').style.display = "none";
 		document.querySelector('.donateFrameStep2').style.display = "block";
@@ -115,13 +139,40 @@ const donateFrameStep2 = () => {
 	let donateFrameStep2 = document.createElement('div');
 	donateFrameStep2.classList.add('donateFrameStep2');
 
-	donateFrameStep2.style.cssText = 'background-image: url(https://i.ibb.co/YX4Fsjs/kapikod.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
+	donateFrameStep2.style.cssText = 'overflow: auto;background-image: url(https://i.ibb.co/YX4Fsjs/kapikod.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
 	donateFrameStep2.classList.add('noneActiveFrame');
 
-	donateFrameStep2.onclick = () => {
-		document.querySelector('.donateFrameStep2').style.display = "none";
-		document.querySelector('.donateFrameStep3').style.display = "block";
-	}
+	let step2ContentHolder = document.createElement('div');
+	step2ContentHolder.style.cssText = "width: 80%;margin: 55px auto;display: flex;justify-content: center;flex-wrap: wrap;"
+	let step2ContentHolderIconsHolder = document.createElement('div');
+	let step2ContentHolderInputHolder = document.createElement('div');
+	
+	let blikIcon = document.createElement('img');
+	blikIcon.style.cssText = "height: 25px;"
+	blikIcon.src="https://i.ibb.co/8DPKtV8/kapiblik.png" 
+	let amountIcon = document.createElement('img');
+	amountIcon.src="https://i.ibb.co/ZKxVkFt/kapi5-1.png"
+	amountIcon.style.cssText = "height: 25px;"
+
+	let blikInput = document.createElement('input');
+	blikInput.style.cssText = 'padding: 10px;font-size: 20px;text-align: center;font-weight: bolder;width: 80%;display: block;margin: 0 auto;border: none;background-image: url("https://i.ibb.co/Ytfh73r/kapiramka-blik.png");background-size: contain;background-repeat: no-repeat;background-position: center;height: 30px;'
+
+	
+
+	step2ContentHolderIconsHolder.appendChild(blikIcon)
+	step2ContentHolderIconsHolder.appendChild(amountIcon)
+
+	step2ContentHolderInputHolder.appendChild(blikInput)
+
+	step2ContentHolder.appendChild(step2ContentHolderIconsHolder);
+	step2ContentHolder.appendChild(step2ContentHolderInputHolder);
+
+	donateFrameStep2.append(step2ContentHolder)	
+
+	// donateFrameStep2.onclick = () => {
+	// 	document.querySelector('.donateFrameStep2').style.display = "none";
+	// 	document.querySelector('.donateFrameStep3').style.display = "block";
+	// }
 	
 	return donateFrameStep2;
 }
@@ -224,6 +275,15 @@ const mainInject = () => {
 
 	.noneActiveFrame{
 		display:none;
+	}
+
+	.amountButton{
+		width: 50px;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+		border: none;
+		background-color: white;
 	}
 	`)
 

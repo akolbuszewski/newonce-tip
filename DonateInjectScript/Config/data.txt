@@ -91,3 +91,66 @@ https://i.ibb.co/Ytfh73r/kapiramka-blik.png
 https://ibb.co/hdccn5C
 https://i.ibb.co/NNrrkh7/kapitick.png
 
+
+
+<div style="
+    position: absolute;
+    width: 150px;
+    height: 40px;
+    background-color: red;
+    bottom: 40px;
+    left: 30px;
+    display: flex;
+    justify-content: space-around;
+    ">
+    <button class="btnkkk" style="
+        background-image: url('https://i.ibb.co/K6WSY30/kapi5N.png');">
+    </button>
+    <button class="btnkkk" style="
+        background-image: url(https://i.ibb.co/f28S0nT/kapi10n.png);">
+    </button>
+    <button class="btnkkk" style="
+        background-image: url(https://i.ibb.co/8rpwj8Q/kapi50n.png);">
+    </button>
+</div>
+
+.btnkkk{
+    width: 50px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    /* background: transparent; */
+    border: none;
+    background-color: white;
+}
+
+
+  
+    <div 
+        style="width: 80%;margin: 55px auto;display: flex;justify-content: center;flex-wrap: wrap;"
+    />
+        <div>
+            <img 
+            src="https://i.ibb.co/8DPKtV8/kapiblik.png" 
+            style="height: 25px;"
+            />
+            <img 
+                src="https://i.ibb.co/ZKxVkFt/kapi5-1.png" 
+                style="height: 25px;"
+            />
+        </div>
+        <div>
+            <input style="
+                width: 80%;
+                display: block;
+                margin: 0 auto;
+                border: none;
+                background-image: url(&quot;https://i.ibb.co/Ytfh73r/kapiramka-blik.png&quot;);
+                background-size: contain;
+                background-repeat: no-repeat;
+                /* background-color: red; */
+                background-position: center;
+                height: 30px;
+            ">
+        </div>
+    </div>
