@@ -1,30 +1,13 @@
 ## How to use
 
-1. Clone this repo and edit [config.js](config.js) for your proxying configuration.
-
-    ```js
-    {
-      "mirrors": [ // an array which configures all websites you want to proxy
-        {
-          // project name for now.sh
-          "key": "google",
-          "proxied": "https://www.google.com/",
-          // If you don't need custom domain,
-          // simply leave `proxying` empty or commented
-          "proxying": "google.upupming.site"
-        }
-      ]
-    }
-    ```
-
-2. Install [now cli](https://zeit.co/download#now-cli) and login.
+1. Install [now cli](https://zeit.co/download#now-cli) and login.
 
     ```bash
     npm i -g now
     ```
 
-3. [Optional] Properly configure your custom domain according to [Aliasing a Deployment](https://zeit.co/docs/v2/domains-and-aliases/aliasing-a-deployment/). (Only if you need a custom domain.)
-4. Run `npm i` and then `npm run deploy`.
+2. [Optional] Properly configure your custom domain according to [Aliasing a Deployment](https://zeit.co/docs/v2/domains-and-aliases/aliasing-a-deployment/). (Only if you need a custom domain.)
+3. Run `npm i` and then `npm run deploy`.
 
 See the following log for example:
 
