@@ -304,14 +304,13 @@ const mainInject = () => {
 	const DEKSTOP_PLAYER_WIDTH = 496;
 	const MAX_WIDTH_FOR_BOTTOM_PLAYER = 1023;
 	const IS_DESKTOP = (WINDOW_VW_WIDTH < MAX_WIDTH_FOR_BOTTOM_PLAYER) ? false : true;
-	
-	
+		
 	getNowPlaying().then((response) => {
 		console.log(response)
 		CURRENT_PLAY = response
 	});
 	
-	console.log(CURRENT_PLAY);
+	//console.log(CURRENT_PLAY);
 
 	preventDefault();
 	fontUpload();
