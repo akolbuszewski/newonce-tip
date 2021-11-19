@@ -95,30 +95,58 @@ const albumCoverHolder = (albumPhoto) => {
 
 	return albumCoverHolder;
 }
+
+//Choosing the amount
+const donateFrameStep1 = () => {
+	let donateFrameStep1 = document.createElement('div');
+	donateFrameStep1.classList.add('donateFrameStep1');
+
+	donateFrameStep1.style.cssText = 'background-image: url(https://i.ibb.co/ZBkdk0M/kapikwota.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
+	//donateFrameStep1.classList.add('noneActiveFrame');
+	donateFrameStep1.onclick = () => {
+		document.querySelector('.donateFrameStep1').style.display = "none";
+		document.querySelector('.donateFrameStep2').style.display = "block";
+	}
+	return donateFrameStep1;
+}
+
+//Blik 
+const donateFrameStep2 = () => {
+	let donateFrameStep2 = document.createElement('div');
+	donateFrameStep2.classList.add('donateFrameStep2');
+
+	donateFrameStep2.style.cssText = 'background-image: url(https://i.ibb.co/YX4Fsjs/kapikod.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
+	donateFrameStep2.classList.add('noneActiveFrame');
+
+	donateFrameStep2.onclick = () => {
+		document.querySelector('.donateFrameStep2').style.display = "none";
+		document.querySelector('.donateFrameStep3').style.display = "block";
+	}
 	
+	return donateFrameStep2;
+}
+
+//Thank u
+const donateFrameStep3 = () => {
+	let donateFrameStep3 = document.createElement('div');
+	donateFrameStep3.classList.add('donateFrameStep3');
+	
+	donateFrameStep3.style.cssText = 'background-image: url(https://i.ibb.co/cbzLNkL/kapidziekujemy.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
+	donateFrameStep3.classList.add('noneActiveFrame');
+	
+	return donateFrameStep3;
+}
+
 const donateFrame = () => {
 	let donateFrame = document.createElement('div');
 	donateFrame.classList.add('donateFrame');
 	donateFrame.style.cssText = 'transform: translateX(250px);background-image: url(https://i.ibb.co/m4WhL9p/kapiramka.png);background-size: contain;width: 216px;height: 150px;position: absolute;top: -152px;right: 17px;background-repeat: no-repeat';
 
+	donateFrame.appendChild(donateFrameStep1());
+	donateFrame.appendChild(donateFrameStep2());
+	donateFrame.appendChild(donateFrameStep3());
 
 	return donateFrame;
-}
-
-//Choosing the amount
-const donateFrameStep1 = () => {
-	let donateFrameStep1 = document.createElement('div');
-	return donateFrameStep1;
-}
-
-const donateFrameStep2 = () => {
-	let donateFrameStep2 = document.createElement('div');
-	return donateFrameStep2;
-}
-
-const donateFrameStep3 = () => {
-	let donateFrameStep3 = document.createElement('div');
-	return donateFrameStep3;
 }
 
 const donateContainerBottomBox = () => {
@@ -172,6 +200,10 @@ const toggleDonateFrame = () => {
 	}
 }
 
+const donateFrameFlowControl = () => {
+	
+}
+
 const addCSS = s => document.head.appendChild(document.createElement("style")).innerHTML=s;
 
 const mainInject = () => {
@@ -188,6 +220,10 @@ const mainInject = () => {
 
 	.activeDonateFrame{
 		transform: translateX(0px) !important;
+	}
+
+	.noneActiveFrame{
+		display:none;
 	}
 	`)
 
