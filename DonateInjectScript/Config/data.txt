@@ -1,0 +1,32 @@
+
+//Wraper dla całego playera
+div
+bBottomNavPlayer_playerBar__1ycMw
+
+//Musi zostać overflow;hidden usuniete
+div
+BottomNavPlayer_playerMeta__3cvLI
+
+
+//DONATE BTN
+https://ibb.co/d4h8dyL
+https://i.ibb.co/XxwchT3/kapidonate.png
+
+//Moneta
+https://ibb.co/YL2L04Y
+https://i.ibb.co/5RTRKXt/kapimoneta.png
+
+//Ramka
+https://ibb.co/y01r0vm
+https://i.ibb.co/sjGZjxp/kapiramka-abum.png
+
+//Dymek
+https://ibb.co/pdF4tfq
+https://i.ibb.co/m4WhL9p/kapiramka.png
+
+//close button
+https://ibb.co/ph7tJhy
+https://i.ibb.co/fDgh4Dv/kapix.png
+
+//font
+https://fonts.google.com/specimen/VT323#standard-styles
