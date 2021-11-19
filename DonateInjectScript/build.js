@@ -174,11 +174,10 @@ const donateFrameStep2 = () => {
 	donateFrameStep2.onkeydown = () => {
 		let count = blikInput.value.length 
 			console.log(count)
-		// if()
-		// document.querySelector('.donateFrameStep2').style.display = "none";
-		// document.querySelector('.donateFrameStep3').style.display = "block";
-		
-	}
+		if(count >= 5)
+			document.querySelector('.donateFrameStep2').style.display = "none";
+			document.querySelector('.donateFrameStep3').style.display = "block";
+		}
 	
 	return donateFrameStep2;
 }
