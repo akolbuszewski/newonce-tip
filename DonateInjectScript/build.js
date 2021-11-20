@@ -5,16 +5,19 @@ let BLIK_CODE = {};
 let TIPS_COUNT = {}
 let IS_DESKTOP = false;
 
-const coinButton = (isDesktop) => {
+const coinButton = () => {
 	let tipButton = document.createElement('button');
 	tipButton.classList.add('coinButton');
-	let desktopCSS = isDesktop ? "position: absolute;top: 37px;right: 126px;" : "";
+	let desktopCSS = IS_DESKTOP ? "position: absolute;top: 37px;right: 126px;" : "";
 
 	tipButton.style.cssText = `z-index:9999;background: none; border: none; position: relative; margin: 0;${desktopCSS}`
 	tipButton.onclick = ()=> {toggleDonateContainer()};
 	let tipButtonImage = document.createElement('img');
 	tipButtonImage.src = "https://i.ibb.co/5RTRKXt/kapimoneta.png"
-	tipButtonImage.style.cssText = "width: 43px;position: absolute;"
+
+	let destktopCSSIMG = !IS_DESKTOP ? "top: -34px;right: -20px;" : "";
+
+	tipButtonImage.style.cssText = `width: 43px;position: absolute; ${destktopCSSIMG}`
 
 	tipButton.appendChild(tipButtonImage)
 
@@ -392,12 +395,23 @@ const updateArtist = () => {
 	// }
 }
 
+const warningBar = () => {
+	let warningBar = document.createElement('div')
+	warningBar.style.cssText = "color:white;text-align:center;background-color:red;width:100%;padding-bottom:5px;padding-top:5px;line-height:35px;z-index:9999;"
+	warningBar.innerHTML = "Ta strona jest kopią newonce.net stworzoną na potrzeby hackhatonu hack4music."
+	return warningBar;
+}
+
 const mainInject = () => {
 	const WINDOW_VW_WIDTH = window.innerWidth;
 	const DEKSTOP_PLAYER_WIDTH = 496;
 	const MAX_WIDTH_FOR_BOTTOM_PLAYER = 1023;
 	IS_DESKTOP = (WINDOW_VW_WIDTH < MAX_WIDTH_FOR_BOTTOM_PLAYER) ? false : true;
-		
+	let footer = document.querySelector("footer");
+
+	let waringInjectHolder = document.querySelector('.AppBar_wrapper__2Z1NQ');
+	waringInjectHolder.after(warningBar());
+
 	getNowPlaying().then((response) => {
 		console.log(response)
 		CURRENT_PLAY_ALBUM = response.artworkUrlLarge;
@@ -407,8 +421,6 @@ const mainInject = () => {
 		if(!IS_DESKTOP){
 			let playerTogglerButton = document.querySelector('.BottomNavPlayer_toggler__2fwVj');
 			playerTogglerButton.after(coinButton());
-	
-			let footer = document.querySelector("footer");
 			footer.after(donateContainer(WINDOW_VW_WIDTH, DEKSTOP_PLAYER_WIDTH));
 		}else{
 			let desktopPlayerButtpm = document.querySelector('.TopNavPlayer_controls__36S2C');
