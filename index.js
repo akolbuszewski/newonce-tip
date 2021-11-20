@@ -14,6 +14,7 @@ function replaceInFile (filepath, origin, replacement) {
 }
 
 function makeMirror (mirror) {
+  console.log("yoyoyo")
   console.log(`Making mirror ${mirror.key}`)
   let dir = path.resolve(__dirname, mirror.key)
   ncp(path.resolve(__dirname, 'template'), dir, function (err) {
