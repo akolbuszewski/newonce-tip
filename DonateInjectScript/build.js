@@ -235,7 +235,7 @@ const donateFrameStep2 = () => {
 			document.querySelector('.donateFrameStepLOADING').style.display = "block";
 
 			setTimeout(()=> {
-				//donate(CURRENT_PLAY_ARTIST, BLIK_CODE, TIP_AMOUNT);
+				donate(CURRENT_PLAY_ARTIST, BLIK_CODE, TIP_AMOUNT);
 				document.querySelector('.donateFrameStepLOADING').style.display = "none";
 				document.querySelector('.donateFrameStep3').style.display = "block";
 				console.log('st1')
@@ -448,4 +448,6 @@ const mainInject = () => {
 	}
 	`)
 }
+
+mainInject();
 
