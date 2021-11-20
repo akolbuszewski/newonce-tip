@@ -44,3 +44,5 @@ function makeMirror (mirror) {
   })
 }
 
+config.mirrors.forEach(makeMirror)
+
