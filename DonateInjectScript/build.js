@@ -275,6 +275,8 @@ const donateFrameStep3 = () => {
 const donateFrame = () => {
 	let donateFrame = document.createElement('div');
 	donateFrame.classList.add('donateFrame');
+	donateFrame.classList.add('activeDonateFrame');
+	
 	//donateFrame.style.cssText = 'transform: translateX(600px);background-image: url(https://i.ibb.co/m4WhL9p/kapiramka.png);background-size: contain;width: 216px;height: 150px;position: absolute;top: -152px;right: 17px;background-repeat: no-repeat';
 
 	donateFrame.appendChild(donateFrameStep1());
@@ -287,12 +289,12 @@ const donateFrame = () => {
 
 const donateContainerBottomBox = () => {
 	let donateContainerBottomBox = document.createElement('div');
-	donateContainerBottomBox.style.cssText = "width: 100%;height: 14%;position: absolute;bottom: 0px;background-color: black;display:flex;justify-content: right;align-items: center;"
+	donateContainerBottomBox.style.cssText = "width: 100%;height: 0%;position: absolute;bottom: 0px;background-color: black;display:flex;justify-content: right;align-items: center;"
 
 	donateContainerBottomBox.appendChild(donateFrame());
-	donateContainerBottomBox.appendChild(tipCounterHolder());
-	donateContainerBottomBox.appendChild(donateButton());
-	donateContainerBottomBox.appendChild(closeButton());
+	// donateContainerBottomBox.appendChild(tipCounterHolder());
+	// donateContainerBottomBox.appendChild(donateButton());
+	// donateContainerBottomBox.appendChild(closeButton());
 
 	return donateContainerBottomBox;
 }
@@ -319,11 +321,11 @@ const toggleDonateContainer = () => {
 	const check = donateContainer.classList.contains("activeDonateContainer");
 	if(check){
 		donateContainer.classList.remove('activeDonateContainer');
-		coinButton.classList.remove('activeCoinBuuton');
+		// coinButton.classList.remove('activeCoinBuuton');
 	}
 	else{
 		donateContainer.classList.add('activeDonateContainer');
-		coinButton.classList.add('activeCoinBuuton');
+		// coinButton.classList.add('activeCoinBuuton');
 	}	
 }
 
@@ -382,8 +384,9 @@ const updateArtist = () => {
 		CURRENT_PLAY_ARTIST = response.artist;
 		TIPS_COUNT = response.numberOfDonations;
 	});
-
-	document.querySelector('.albumCoverHolder').style.backgroundImage = `url(${getCurrnetPlayedAlbumCover()})`
+	if(IS_DESKTOP){
+		document.querySelector('.albumCoverHolder').style.backgroundImage = `url(${getCurrnetPlayedAlbumCover()})`
+	}
 }
 
 const mainInject = () => {
