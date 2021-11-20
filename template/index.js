@@ -4,7 +4,7 @@ const koaProxy = require('koa-proxies')
 const app = new Koa()
 
 app.use(koaProxy('/', {
-  target: 'https://newonce.net/',
+  target: 'https://onet.pl/',
   changeOrigin: true,
   logs: true,
   autoRewrite: true
