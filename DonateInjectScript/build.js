@@ -277,7 +277,9 @@ const donateFrame = () => {
 	donateFrame.classList.add('donateFrame');
 	donateFrame.classList.add('activeDonateFrame');
 	
-	//donateFrame.style.cssText = 'transform: translateX(600px);background-image: url(https://i.ibb.co/m4WhL9p/kapiramka.png);background-size: contain;width: 216px;height: 150px;position: absolute;top: -152px;right: 17px;background-repeat: no-repeat';
+	if(IS_DESKTOP){
+		donateFrame.style.cssText = 'transform: translateX(600px);background-image: url(https://i.ibb.co/m4WhL9p/kapiramka.png);background-size: contain;width: 216px;height: 150px;position: absolute;top: -550px;right: 1000px;background-repeat: no-repeat';
+	}
 
 	donateFrame.appendChild(donateFrameStep1());
 	donateFrame.appendChild(donateFrameStep2());
@@ -303,12 +305,12 @@ const donateContainer = (viewportWidth, desktopPlayerWidth,isDekstop) => {
 
 	let donateContainer = document.createElement('div');
 	donateContainer.classList.add('donateContainer');
-	let desktopCSS = isDekstop ? "bottom:0;top:96px;overflow:hidden" : "" 	
+	let desktopCSS = isDekstop ? "bottom:0;top:96px;" : "" 	
 	donateContainer.style.cssText = `max-width:1023px;transform: translateX(1500px);position: fixed;width: 100%;height: 70vh;bottom: 116px;max-height: 560px;${desktopCSS}`
-	if(viewportWidth > 1023){
-		donateContainer.appendChild(albumCoverHolder(getCurrnetPlayedAlbumCover()));
-		donateContainer.style.maxWidth = `${desktopPlayerWidth}px`;
-	}
+	// if(viewportWidth > 1023){
+	// 	donateContainer.appendChild(albumCoverHolder(getCurrnetPlayedAlbumCover()));
+	// 	donateContainer.style.maxWidth = `${desktopPlayerWidth}px`;
+	// }
 	donateContainer.appendChild(donateContainerBottomBox())	
 
 	return donateContainer;
@@ -384,9 +386,9 @@ const updateArtist = () => {
 		CURRENT_PLAY_ARTIST = response.artist;
 		TIPS_COUNT = response.numberOfDonations;
 	});
-	if(IS_DESKTOP){
-		document.querySelector('.albumCoverHolder').style.backgroundImage = `url(${getCurrnetPlayedAlbumCover()})`
-	}
+	// if(IS_DESKTOP){
+	// 	document.querySelector('.albumCoverHolder').style.backgroundImage = `url(${getCurrnetPlayedAlbumCover()})`
+	// }
 }
 
 const mainInject = () => {
