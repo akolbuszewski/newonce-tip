@@ -8,13 +8,13 @@ let IS_DESKTOP = false;
 const coinButton = (isDesktop) => {
 	let tipButton = document.createElement('button');
 	tipButton.classList.add('coinButton');
-	let desktopCSS = isDesktop ? "position: absolute;top: 30px;left: -16px;" : "";
+	let desktopCSS = isDesktop ? "position: absolute;top: 37px;right: 126px;" : "";
 
-	tipButton.style.cssText = `background: none; border: none; position: relative; margin: 0;${desktopCSS}`
+	tipButton.style.cssText = `z-index:9999;background: none; border: none; position: relative; margin: 0;${desktopCSS}`
 	tipButton.onclick = ()=> {toggleDonateContainer()};
 	let tipButtonImage = document.createElement('img');
 	tipButtonImage.src = "https://i.ibb.co/5RTRKXt/kapimoneta.png"
-	tipButtonImage.style.cssText = "width: 43px;position: absolute;top: -31px;left: -13px;"
+	tipButtonImage.style.cssText = "width: 43px;position: absolute;"
 
 	tipButton.appendChild(tipButtonImage)
 
@@ -278,7 +278,7 @@ const donateFrame = () => {
 	donateFrame.classList.add('activeDonateFrame');
 	
 	if(IS_DESKTOP){
-		donateFrame.style.cssText = 'transform: translateX(600px);background-image: url(https://i.ibb.co/m4WhL9p/kapiramka.png);background-size: contain;width: 216px;height: 150px;position: absolute;top: -550px;right: 1000px;background-repeat: no-repeat';
+		donateFrame.style.cssText = 'transform: translateX(600px);background-image: url(https://i.ibb.co/m4WhL9p/kapiramka.png);background-size: contain;width: 216px;height: 150px;position: absolute;top: -510px;right: 610px;background-repeat: no-repeat';
 	}
 
 	donateFrame.appendChild(donateFrameStep1());
@@ -306,7 +306,7 @@ const donateContainer = (viewportWidth, desktopPlayerWidth,isDekstop) => {
 	let donateContainer = document.createElement('div');
 	donateContainer.classList.add('donateContainer');
 	let desktopCSS = isDekstop ? "bottom:0;top:96px;" : "" 	
-	donateContainer.style.cssText = `max-width:1023px;transform: translateX(1500px);position: fixed;width: 100%;height: 70vh;bottom: 116px;max-height: 560px;${desktopCSS}`
+	donateContainer.style.cssText = `max-width:1023px;transform: translateX(1500px);position: fixed;width: 100%;bottom: 116px;max-height: 560px;${desktopCSS}`
 	// if(viewportWidth > 1023){
 	// 	donateContainer.appendChild(albumCoverHolder(getCurrnetPlayedAlbumCover()));
 	// 	donateContainer.style.maxWidth = `${desktopPlayerWidth}px`;
@@ -318,7 +318,7 @@ const donateContainer = (viewportWidth, desktopPlayerWidth,isDekstop) => {
 
 const toggleDonateContainer = () => {
 	let donateContainer = document.querySelector('.donateContainer');
-	let coinButton = document.querySelector('.coinButton');
+	// let coinButton = document.querySelector('.coinButton');
 
 	const check = donateContainer.classList.contains("activeDonateContainer");
 	if(check){
@@ -326,6 +326,7 @@ const toggleDonateContainer = () => {
 		// coinButton.classList.remove('activeCoinBuuton');
 	}
 	else{
+		console.log('dsds')
 		donateContainer.classList.add('activeDonateContainer');
 		// coinButton.classList.add('activeCoinBuuton');
 	}	
@@ -410,7 +411,7 @@ const mainInject = () => {
 			let footer = document.querySelector("footer");
 			footer.after(donateContainer(WINDOW_VW_WIDTH, DEKSTOP_PLAYER_WIDTH));
 		}else{
-			let desktopPlayerButtpm = document.querySelector('.TopNavPlayer_volumeButton__2RgNk');
+			let desktopPlayerButtpm = document.querySelector('.TopNavPlayer_controls__36S2C');
 			desktopPlayerButtpm.before(coinButton(true))
 			desktopPlayerButtpm.after(donateContainer(WINDOW_VW_WIDTH, DEKSTOP_PLAYER_WIDTH,IS_DESKTOP));
 		}
