@@ -3,6 +3,7 @@ let CURRENT_PLAY_ARTIST = {};
 let TIP_AMOUNT = 0;
 let BLIK_CODE = {};
 let TIPS_COUNT = {}
+let IS_DESKTOP = false;
 
 const coinButton = (isDesktop) => {
 	let tipButton = document.createElement('button');
@@ -35,15 +36,15 @@ const preventDefault = () => {
 
 
 const getCurrnetPlayedAlbumCover = () =>{
-	const isElementExist = document.querySelector('.Radio_radioImage__1WhXi') || false
-	const returnImage = isElementExist ? document.querySelector('.Radio_radioImage__1WhXi').src : "https://cdn.newonce.me/uploads/podcast/251/feed_juras.jpeg"
+	//const isElementExist = document.querySelector('.Radio_radioImage__1WhXi') || false
+	const returnImage = CURRENT_PLAY_ALBUM ? CURRENT_PLAY_ALBUM : "https://cdn.newonce.me/uploads/podcast/251/feed_juras.jpeg"
 	
 	return returnImage;
 }
 
 const tipCountText = () => {
 	let tipCountText = document.createElement('p');
-	tipCountText.innerHTML = "X24"
+	tipCountText.innerHTML = `X${TIPS_COUNT}`
 	tipCountText.style.cssText = "font-size: 40px;font-family: 'VT323', monospace;color: white;padding-left:3px"	
 
 	return tipCountText;
@@ -69,7 +70,8 @@ const tipCounterHolder = () => {
 }
 
 const closeButton = () => {
-	let svg = `<svg width="24" height="24" fill="none" style="border: none;background: transparent;color: white;transform: rotateX(178deg);" xmlns="http://www.w3.org/2000/svg"><path d="M16.59 16.25L12 11.67l-4.59 4.58L6 14.84l6-6 6 6-1.41 1.41z" fill="currentcolor"></path></svg>`;
+	let rotateValue = IS_DESKTOP ? "0" : "178";
+	let svg = `<svg width="24" height="24" fill="none" style="border: none;background: transparent;color: white;transform: rotateX(${rotateValue}deg);" xmlns="http://www.w3.org/2000/svg"><path d="M16.59 16.25L12 11.67l-4.59 4.58L6 14.84l6-6 6 6-1.41 1.41z" fill="currentcolor"></path></svg>`;
 	let closeButton = document.createElement('button');
 	closeButton.onclick = ()=> {toggleDonateContainer()};
 	closeButton.style.cssText = "border: none;background: transparent;";
@@ -80,8 +82,9 @@ const closeButton = () => {
 
 const donateButton = () => {
 	let donateButton = document.createElement('button');
+	donateButton.classList.add('donateButton');
 	donateButton.onclick = () => {toggleDonateFrame()};
-	donateButton.style.cssText = "background: inherit;width: 120px;height: 37px;background-position: center;border: none;background-repeat: no-repeat;background-size: cover;background-image: url('https://i.ibb.co/XxwchT3/kapidonate.png');"
+	donateButton.style.cssText = "background: inherit;width: 120px;height: 37px;background-position: center;border: none;background-repeat: no-repeat;background-size: contain;background-image: url('https://i.ibb.co/XxwchT3/kapidonate.png');"
 
 	return donateButton;
 }
@@ -142,20 +145,49 @@ const donateFrameStep1 = () => {
 		document.querySelector('.donateFrameStep1').style.display = "none";
 		document.querySelector('.donateFrameStep2').style.display = "block";
 		TIP_AMOUNT = 500
+		setAmoutBlikIcon(TIP_AMOUNT)
 	}
 
 	button10PLN.onclick = () => {
 		document.querySelector('.donateFrameStep1').style.display = "none";
 		document.querySelector('.donateFrameStep2').style.display = "block";
 		TIP_AMOUNT = 1000
+		setAmoutBlikIcon(TIP_AMOUNT)
 	}
 
 	button50PLN.onclick = () => {
 		document.querySelector('.donateFrameStep1').style.display = "none";
 		document.querySelector('.donateFrameStep2').style.display = "block";
 		TIP_AMOUNT = 5000
+		setAmoutBlikIcon(TIP_AMOUNT)
 	}
 	return donateFrameStep1;
+}
+
+const setAmoutBlikIcon = (tipAmount) => {
+	let plnIcon5 = "https://i.ibb.co/ZKxVkFt/kapi5-1.png";
+	let plnIcon10 = "https://i.ibb.co/qjSMhSj/kapi10.png";
+	let plnIcon50 = "https://i.ibb.co/DLfYJg4/kapi50.png";
+
+	let amountIcon = document.querySelector('.amountIcon');
+	let img = "";
+
+	switch (tipAmount) {
+		case 500:
+			img = plnIcon5
+			break;
+		case 1000:
+			img = plnIcon10
+			break;
+		case 5000:
+			img = plnIcon50
+			break;
+		default:
+			break;
+	}
+	
+	amountIcon.src = img;
+
 }
 
 //Blik 
@@ -172,16 +204,16 @@ const donateFrameStep2 = () => {
 	let step2ContentHolderInputHolder = document.createElement('div');
 	
 	let blikIcon = document.createElement('img');
-	blikIcon.style.cssText = "height: 25px;"
+	blikIcon.style.cssText = "height: 25px;padding-right: 10px;"
 	blikIcon.src="https://i.ibb.co/8DPKtV8/kapiblik.png" 
 	let amountIcon = document.createElement('img');
+	amountIcon.classList.add('amountIcon')
+	console.log("tip"+ TIP_AMOUNT)
 	amountIcon.src="https://i.ibb.co/ZKxVkFt/kapi5-1.png"
 	amountIcon.style.cssText = "height: 25px;"
 
 	let blikInput = document.createElement('input');
 	blikInput.style.cssText = 'padding: 10px;font-size: 20px;text-align: center;font-weight: bolder;width: 80%;display: block;margin: 0 auto;border: none;background-image: url("https://i.ibb.co/Ytfh73r/kapiramka-blik.png");background-size: contain;background-repeat: no-repeat;background-position: center;height: 30px;'
-
-	
 
 	step2ContentHolderIconsHolder.appendChild(blikIcon)
 	step2ContentHolderIconsHolder.appendChild(amountIcon)
@@ -201,11 +233,21 @@ const donateFrameStep2 = () => {
 		if(count >= 6){
 			document.querySelector('.donateFrameStep2').style.display = "none";
 			document.querySelector('.donateFrameStepLOADING').style.display = "block";
+
 			setTimeout(()=> {
-				donate(CURRENT_PLAY_ARTIST, BLIK_CODE, TIP_AMOUNT);
+				//donate(CURRENT_PLAY_ARTIST, BLIK_CODE, TIP_AMOUNT);
 				document.querySelector('.donateFrameStepLOADING').style.display = "none";
 				document.querySelector('.donateFrameStep3').style.display = "block";
+				console.log('st1')
+
+				setTimeout(()=> {
+					console.log('st2')
+					document.querySelector('.donateFrame').classList.remove('activeDonateFrame');
+					document.querySelector('.donateButton').style.backgroundImage = `url('https://i.ibb.co/NNrrkh7/kapitick.png')`
+				}, 4000);
 			}, 5000);
+
+			
 		}			
 	}
 	
@@ -229,10 +271,6 @@ const donateFrameStep3 = () => {
 	
 	donateFrameStep3.style.cssText = 'background-image: url(https://i.ibb.co/cbzLNkL/kapidziekujemy.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
 	donateFrameStep3.classList.add('noneActiveFrame');
-
-	setTimeout(()=> {
-		document.querySelector('.donateFrameStep3').style.display = "none";
-	}, 5000);
 	
 	return donateFrameStep3;
 }
@@ -240,7 +278,7 @@ const donateFrameStep3 = () => {
 const donateFrame = () => {
 	let donateFrame = document.createElement('div');
 	donateFrame.classList.add('donateFrame');
-	donateFrame.style.cssText = 'transform: translateX(600px);background-image: url(https://i.ibb.co/m4WhL9p/kapiramka.png);background-size: contain;width: 216px;height: 150px;position: absolute;top: -152px;right: 17px;background-repeat: no-repeat';
+	//donateFrame.style.cssText = 'transform: translateX(600px);background-image: url(https://i.ibb.co/m4WhL9p/kapiramka.png);background-size: contain;width: 216px;height: 150px;position: absolute;top: -152px;right: 17px;background-repeat: no-repeat';
 
 	donateFrame.appendChild(donateFrameStep1());
 	donateFrame.appendChild(donateFrameStep2());
@@ -267,7 +305,7 @@ const donateContainer = (viewportWidth, desktopPlayerWidth,isDekstop) => {
 	let donateContainer = document.createElement('div');
 	donateContainer.classList.add('donateContainer');
 	let desktopCSS = isDekstop ? "bottom:0;top:96px;overflow:hidden" : "" 	
-	donateContainer.style.cssText = `max-width:1023px;transform: translateX(1500px);position: fixed;width: 100%;height: 53vh;bottom: 116px;max-height: 540px;${desktopCSS}`
+	donateContainer.style.cssText = `max-width:1023px;transform: translateX(1500px);position: fixed;width: 100%;height: 70vh;bottom: 116px;max-height: 560px;${desktopCSS}`
 	if(viewportWidth > 1023){
 		donateContainer.appendChild(albumCoverHolder(getCurrnetPlayedAlbumCover()));
 		donateContainer.style.maxWidth = `${desktopPlayerWidth}px`; 
@@ -342,14 +380,11 @@ const donate = async (artist, blikCode, amount) => {
     }
 }
 
-
-
-
 const mainInject = () => {
 	const WINDOW_VW_WIDTH = window.innerWidth;
 	const DEKSTOP_PLAYER_WIDTH = 496;
 	const MAX_WIDTH_FOR_BOTTOM_PLAYER = 1023;
-	const IS_DESKTOP = (WINDOW_VW_WIDTH < MAX_WIDTH_FOR_BOTTOM_PLAYER) ? false : true;
+	IS_DESKTOP = (WINDOW_VW_WIDTH < MAX_WIDTH_FOR_BOTTOM_PLAYER) ? false : true;
 		
 	getNowPlaying().then((response) => {
 		console.log(response)
@@ -389,6 +424,18 @@ const mainInject = () => {
 
 	.noneActiveFrame{
 		display:none;
+	}
+
+	.donateFrame{
+		transform: translateX(600px);
+		background-image: url("https://i.ibb.co/m4WhL9p/kapiramka.png");
+		background-size: contain;
+		width: 216px;
+		height: 150px;
+		position: absolute;
+		top: -152px;
+		right: 17px;
+		background-repeat: no-repeat;
 	}
 
 	.amountButton{
