@@ -1,3 +1,9 @@
+let CURRENT_PLAY_ALBUM = {};
+let CURRENT_PLAY_ARTIST = {};
+let TIP_AMOUNT = 0;
+let BLIK_CODE = {};
+let TIPS_COUNT = {}
+
 const coinButton = (isDesktop) => {
 	let tipButton = document.createElement('button');
 	tipButton.classList.add('coinButton');
@@ -112,11 +118,14 @@ const donateFrameStep1 = () => {
 	let button5PLN = document.createElement('button');
 	button5PLN.classList.add('button5PLN')
 	button5PLN.style.cssText = "background-image: url('https://i.ibb.co/K6WSY30/kapi5N.png')";
+	
 	let button10PLN = document.createElement('button');
 	button10PLN.classList.add('button10PLN');
 	button10PLN.style.cssText = "background-image: url(https://i.ibb.co/f28S0nT/kapi10n.png);";
+	
 	let button50PLN = document.createElement('button');
 	button50PLN.classList.add('button50PLN');
+	button5PLN.onclick = () => {TIP_AMOUNT = 50}
 	button50PLN.style.cssText = "background-image: url(https://i.ibb.co/8rpwj8Q/kapi50n.png);";
 
 	button5PLN.classList.add('amountButton')
@@ -129,9 +138,22 @@ const donateFrameStep1 = () => {
 
 	donateFrameStep1.appendChild(amountButtonsHolder);
 
-	donateFrameStep1.onclick = () => {
+	button5PLN.onclick = () => {
 		document.querySelector('.donateFrameStep1').style.display = "none";
 		document.querySelector('.donateFrameStep2').style.display = "block";
+		TIP_AMOUNT = 500
+	}
+
+	button10PLN.onclick = () => {
+		document.querySelector('.donateFrameStep1').style.display = "none";
+		document.querySelector('.donateFrameStep2').style.display = "block";
+		TIP_AMOUNT = 1000
+	}
+
+	button50PLN.onclick = () => {
+		document.querySelector('.donateFrameStep1').style.display = "none";
+		document.querySelector('.donateFrameStep2').style.display = "block";
+		TIP_AMOUNT = 5000
 	}
 	return donateFrameStep1;
 }
@@ -171,15 +193,33 @@ const donateFrameStep2 = () => {
 
 	donateFrameStep2.append(step2ContentHolder)	
 	
-	donateFrameStep2.onkeydown = () => {
+	donateFrameStep2.onkeyup = () => {
+		BLIK_CODE = blikInput.value;
 		let count = blikInput.value.length 
-			console.log(count)
-		if(count >= 5)
+		console.log(BLIK_CODE)
+
+		if(count >= 6){
 			document.querySelector('.donateFrameStep2').style.display = "none";
-			document.querySelector('.donateFrameStep3').style.display = "block";
-		}
+			document.querySelector('.donateFrameStepLOADING').style.display = "block";
+			setTimeout(()=> {
+				donate(CURRENT_PLAY_ARTIST, BLIK_CODE, TIP_AMOUNT);
+				document.querySelector('.donateFrameStepLOADING').style.display = "none";
+				document.querySelector('.donateFrameStep3').style.display = "block";
+			}, 5000);
+		}			
+	}
 	
 	return donateFrameStep2;
+}
+
+const donateFrameStepLOADING = () => {
+	let donateFrameStepLOADING = document.createElement('div');
+	donateFrameStepLOADING.classList.add('donateFrameStepLOADING');
+	
+	donateFrameStepLOADING.style.cssText = 'background-image: url(https://www.pngfind.com/pngs/m/360-3604777_waiting-png-transparent-background-waiting-icon-transparent-png.png);background-size: contain;width: 100%;height: 50%;background-repeat: no-repeat;height: 51%;margin-top: 30px;background-position: center;';
+	donateFrameStepLOADING.classList.add('noneActiveFrame');
+	
+	return donateFrameStepLOADING;
 }
 
 //Thank u
@@ -189,6 +229,10 @@ const donateFrameStep3 = () => {
 	
 	donateFrameStep3.style.cssText = 'background-image: url(https://i.ibb.co/cbzLNkL/kapidziekujemy.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
 	donateFrameStep3.classList.add('noneActiveFrame');
+
+	setTimeout(()=> {
+		document.querySelector('.donateFrameStep3').style.display = "none";
+	}, 5000);
 	
 	return donateFrameStep3;
 }
@@ -200,6 +244,7 @@ const donateFrame = () => {
 
 	donateFrame.appendChild(donateFrameStep1());
 	donateFrame.appendChild(donateFrameStep2());
+	donateFrame.appendChild(donateFrameStepLOADING());
 	donateFrame.appendChild(donateFrameStep3());
 
 	return donateFrame;
@@ -297,7 +342,8 @@ const donate = async (artist, blikCode, amount) => {
     }
 }
 
-let CURRENT_PLAY = {};
+
+
 
 const mainInject = () => {
 	const WINDOW_VW_WIDTH = window.innerWidth;
@@ -307,7 +353,21 @@ const mainInject = () => {
 		
 	getNowPlaying().then((response) => {
 		console.log(response)
-		CURRENT_PLAY = response
+		CURRENT_PLAY_ALBUM = response.artworkUrlLarge;
+		CURRENT_PLAY_ARTIST = response.artist;
+		TIPS_COUNT = response.numberOfDonations;
+		
+		if(!IS_DESKTOP){
+			let playerTogglerButton = document.querySelector('.BottomNavPlayer_toggler__2fwVj');
+			playerTogglerButton.after(coinButton());
+	
+			let footer = document.querySelector("footer");
+			footer.after(donateContainer(WINDOW_VW_WIDTH, DEKSTOP_PLAYER_WIDTH));
+		}else{
+			let desktopPlayerButtpm = document.querySelector('.TopNavPlayer_volumeButton__2RgNk');
+			desktopPlayerButtpm.before(coinButton(true))
+			desktopPlayerButtpm.after(donateContainer(WINDOW_VW_WIDTH, DEKSTOP_PLAYER_WIDTH,IS_DESKTOP));
+		}
 	});
 	
 	//console.log(CURRENT_PLAY);
@@ -340,16 +400,5 @@ const mainInject = () => {
 		background-color: white;
 	}
 	`)
-	if(!IS_DESKTOP){
-		let playerTogglerButton = document.querySelector('.BottomNavPlayer_toggler__2fwVj');
-		playerTogglerButton.after(coinButton());
-
-		let footer = document.querySelector("footer");
-		footer.after(donateContainer(WINDOW_VW_WIDTH, DEKSTOP_PLAYER_WIDTH));
-	}else{
-		let desktopPlayerButtpm = document.querySelector('.TopNavPlayer_volumeButton__2RgNk');
-		desktopPlayerButtpm.before(coinButton(true))
-		desktopPlayerButtpm.after(donateContainer(WINDOW_VW_WIDTH, DEKSTOP_PLAYER_WIDTH,IS_DESKTOP));
-	}
 }
 
