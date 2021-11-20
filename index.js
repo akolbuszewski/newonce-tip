@@ -23,7 +23,7 @@ function makeMirror (mirror) {
     console.log(`Folder ${mirror.key} created`)
     replaceInFile(
       path.resolve(__dirname, mirror.key, 'index.js'),
-      'https://www.onet.pl/',
+      'https://www.newonce.net/',
       mirror.proxied
     )
     replaceInFile(

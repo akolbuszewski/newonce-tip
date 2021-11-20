@@ -2,7 +2,7 @@ module.exports = {
   'mirrors': [
     {
       'key': 'newonce',
-      'proxied': 'https://onet.pl',
+      'proxied': 'https://newonce.net/',
       // 'proxying': 'hack.newonce.live'
     },
   ]
