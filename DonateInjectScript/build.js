@@ -100,6 +100,7 @@ const newonceBorder = () => {
 
 const albumCoverHolder = (albumPhoto) => {
 	let albumCoverHolder = document.createElement('div');
+	albumCoverHolder.classList.add('albumCoverHolder');
 	albumCoverHolder.style.cssText = `width: 100%;height: 86%;background-repeat: no-repeat;background-image: url(${albumPhoto});background-color: black;background-position: center;`
 
 	albumCoverHolder.appendChild(newonceBorder());
@@ -208,7 +209,6 @@ const donateFrameStep2 = () => {
 	blikIcon.src="https://i.ibb.co/8DPKtV8/kapiblik.png" 
 	let amountIcon = document.createElement('img');
 	amountIcon.classList.add('amountIcon')
-	console.log("tip"+ TIP_AMOUNT)
 	amountIcon.src="https://i.ibb.co/ZKxVkFt/kapi5-1.png"
 	amountIcon.style.cssText = "height: 25px;"
 
@@ -228,7 +228,6 @@ const donateFrameStep2 = () => {
 	donateFrameStep2.onkeyup = () => {
 		BLIK_CODE = blikInput.value;
 		let count = blikInput.value.length 
-		console.log(BLIK_CODE)
 
 		if(count >= 6){
 			document.querySelector('.donateFrameStep2').style.display = "none";
@@ -238,10 +237,8 @@ const donateFrameStep2 = () => {
 				donate(CURRENT_PLAY_ARTIST, BLIK_CODE, TIP_AMOUNT);
 				document.querySelector('.donateFrameStepLOADING').style.display = "none";
 				document.querySelector('.donateFrameStep3').style.display = "block";
-				console.log('st1')
 
 				setTimeout(()=> {
-					console.log('st2')
 					document.querySelector('.donateFrame').classList.remove('activeDonateFrame');
 					document.querySelector('.donateButton').style.backgroundImage = `url('https://i.ibb.co/NNrrkh7/kapitick.png')`
 				}, 4000);
@@ -258,7 +255,7 @@ const donateFrameStepLOADING = () => {
 	let donateFrameStepLOADING = document.createElement('div');
 	donateFrameStepLOADING.classList.add('donateFrameStepLOADING');
 	
-	donateFrameStepLOADING.style.cssText = 'background-image: url(https://www.pngfind.com/pngs/m/360-3604777_waiting-png-transparent-background-waiting-icon-transparent-png.png);background-size: contain;width: 100%;height: 50%;background-repeat: no-repeat;height: 51%;margin-top: 30px;background-position: center;';
+	donateFrameStepLOADING.style.cssText = 'background-image: url(https://i.ibb.co/nw08Dhf/kapiw8.png);background-size: contain;width: 100%;height: 50%;background-repeat: no-repeat;height: 100%;background-position: center;';
 	donateFrameStepLOADING.classList.add('noneActiveFrame');
 	
 	return donateFrameStepLOADING;
@@ -308,8 +305,7 @@ const donateContainer = (viewportWidth, desktopPlayerWidth,isDekstop) => {
 	donateContainer.style.cssText = `max-width:1023px;transform: translateX(1500px);position: fixed;width: 100%;height: 70vh;bottom: 116px;max-height: 560px;${desktopCSS}`
 	if(viewportWidth > 1023){
 		donateContainer.appendChild(albumCoverHolder(getCurrnetPlayedAlbumCover()));
-		donateContainer.style.maxWidth = `${desktopPlayerWidth}px`; 
-		console.log(desktopPlayerWidth);
+		donateContainer.style.maxWidth = `${desktopPlayerWidth}px`;
 	}
 	donateContainer.appendChild(donateContainerBottomBox())	
 
@@ -380,6 +376,16 @@ const donate = async (artist, blikCode, amount) => {
     }
 }
 
+const updateArtist = () => {
+	getNowPlaying().then((response) => {
+		CURRENT_PLAY_ALBUM = response.artworkUrlLarge;
+		CURRENT_PLAY_ARTIST = response.artist;
+		TIPS_COUNT = response.numberOfDonations;
+	});
+
+	document.querySelector('.albumCoverHolder').style.backgroundImage = `url(${getCurrnetPlayedAlbumCover()})`
+}
+
 const mainInject = () => {
 	const WINDOW_VW_WIDTH = window.innerWidth;
 	const DEKSTOP_PLAYER_WIDTH = 496;
@@ -403,9 +409,12 @@ const mainInject = () => {
 			desktopPlayerButtpm.before(coinButton(true))
 			desktopPlayerButtpm.after(donateContainer(WINDOW_VW_WIDTH, DEKSTOP_PLAYER_WIDTH,IS_DESKTOP));
 		}
+
+		setInterval(() => {
+			updateArtist();
+			console.log('Artist update...')
+		}, 2000);
 	});
-	
-	//console.log(CURRENT_PLAY);
 
 	preventDefault();
 	fontUpload();
