@@ -116,11 +116,13 @@ const donateFrameStep1 = () => {
 	let donateFrameStep1 = document.createElement('div');
 	donateFrameStep1.classList.add('donateFrameStep1');
 
-	donateFrameStep1.style.cssText = 'background-image: url(https://i.ibb.co/ZBkdk0M/kapikwota.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
+	let step1backgroundURL = IS_DESKTOP ? "https://i.ibb.co/kM2Pfbm/kapikwota-g.png" : "https://i.ibb.co/ZBkdk0M/kapikwota.png";
+	donateFrameStep1.style.cssText = `background-image: url(${step1backgroundURL});background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat`;
 	//donateFrameStep1.classList.add('noneActiveFrame');
 
+	let bottomPX = IS_DESKTOP ? "25px" : "40px";
 	let amountButtonsHolder = document.createElement('div');
-	amountButtonsHolder.style.cssText = "position: absolute;width: 150px;height: 40px;background-color: red;bottom: 40px;left: 30px;display: flex;justify-content: space-around;"
+	amountButtonsHolder.style.cssText = `position: absolute;width: 150px;height: 40px;background-color: red;bottom: ${bottomPX};left: 30px;display: flex;justify-content: space-around;`
 
 	let button5PLN = document.createElement('button');
 	button5PLN.classList.add('button5PLN')
@@ -199,11 +201,15 @@ const donateFrameStep2 = () => {
 	let donateFrameStep2 = document.createElement('div');
 	donateFrameStep2.classList.add('donateFrameStep2');
 
-	donateFrameStep2.style.cssText = 'overflow: auto;background-image: url(https://i.ibb.co/YX4Fsjs/kapikod.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
+	let donateframeURL = IS_DESKTOP ? "https://i.ibb.co/sj4pvNR/kapiblik-g.png" : "https://i.ibb.co/YX4Fsjs/kapikod.png";
+
+	donateFrameStep2.style.cssText = `overflow: auto;background-image: url(${donateframeURL});background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat`;
 	donateFrameStep2.classList.add('noneActiveFrame');
 
 	let step2ContentHolder = document.createElement('div');
-	step2ContentHolder.style.cssText = "width: 80%;margin: 55px auto;display: flex;justify-content: center;flex-wrap: wrap;"
+
+	let marginTop = IS_DESKTOP ? "74px" : "55px" 
+	step2ContentHolder.style.cssText = `width: 80%;margin: ${marginTop} auto;display: flex;justify-content: center;flex-wrap: wrap;`
 	let step2ContentHolderIconsHolder = document.createElement('div');
 	let step2ContentHolderInputHolder = document.createElement('div');
 	
@@ -258,7 +264,9 @@ const donateFrameStepLOADING = () => {
 	let donateFrameStepLOADING = document.createElement('div');
 	donateFrameStepLOADING.classList.add('donateFrameStepLOADING');
 	
-	donateFrameStepLOADING.style.cssText = 'background-image: url(https://i.ibb.co/nw08Dhf/kapiw8.png);background-size: contain;width: 100%;height: 50%;background-repeat: no-repeat;height: 100%;background-position: center;';
+	let backgroundURL = IS_DESKTOP ? "https://i.ibb.co/8gLvpXh/kapiklepsydra-g.png" : "https://i.ibb.co/nw08Dhf/kapiw8.png"
+
+	donateFrameStepLOADING.style.cssText = `background-image: url(${backgroundURL});background-size: contain;width: 100%;height: 50%;background-repeat: no-repeat;height: 100%;background-position: center;`;
 	donateFrameStepLOADING.classList.add('noneActiveFrame');
 	
 	return donateFrameStepLOADING;
@@ -269,7 +277,9 @@ const donateFrameStep3 = () => {
 	let donateFrameStep3 = document.createElement('div');
 	donateFrameStep3.classList.add('donateFrameStep3');
 	
-	donateFrameStep3.style.cssText = 'background-image: url(https://i.ibb.co/cbzLNkL/kapidziekujemy.png);background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat';
+	let backgroundURL = IS_DESKTOP ? "https://i.ibb.co/D5NbjY7/kapidzieki-g.png" : "https://i.ibb.co/dtjPTKL/kapidzieki-d.png";
+
+	donateFrameStep3.style.cssText = `background-image: url(${backgroundURL});background-size: contain;width: 100%;height: 100%;background-repeat: no-repeat`;
 	donateFrameStep3.classList.add('noneActiveFrame');
 	
 	return donateFrameStep3;
@@ -281,7 +291,7 @@ const donateFrame = () => {
 	donateFrame.classList.add('activeDonateFrame');
 	
 	if(IS_DESKTOP){
-		donateFrame.style.cssText = 'transform: translateX(600px);background-image: url(https://i.ibb.co/m4WhL9p/kapiramka.png);background-size: contain;width: 216px;height: 150px;position: absolute;top: -510px;right: 610px;background-repeat: no-repeat';
+		donateFrame.style.cssText = 'transform: translateX(600px);background-size: contain;width: 216px;height: 150px;position: absolute;top: -485px;right: 610px;background-repeat: no-repeat';
 	}
 
 	donateFrame.appendChild(donateFrameStep1());
@@ -455,12 +465,11 @@ const mainInject = () => {
 
 	.donateFrame{
 		transform: translateX(600px);
-		background-image: url("https://i.ibb.co/m4WhL9p/kapiramka.png");
 		background-size: contain;
 		width: 216px;
 		height: 150px;
 		position: absolute;
-		top: -152px;
+		top: -175px;
 		right: 17px;
 		background-repeat: no-repeat;
 	}
