@@ -408,7 +408,8 @@ const updateArtist = () => {
 const warningBar = () => {
 	let warningBar = document.createElement('div')
 	warningBar.style.cssText = "color:white;text-align:center;background-color:red;width:100%;padding-bottom:5px;padding-top:5px;line-height:35px;z-index:9999;"
-	warningBar.innerHTML = "Ta strona jest kopią newonce.net stworzoną na potrzeby hackhatonu hack4music."
+	warningBar.innerHTML = 'Ta strona jest kopią newonce.net stworzoną na potrzeby hackhatonu hack4music. <a href="https://github.com/ciessielski/newonce-tip" style="color: white;">[kod na githubie]</a>'
+
 	return warningBar;
 }
 
